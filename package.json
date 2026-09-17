@@ -1,0 +1,34 @@
+{
+  "name": "pcboard-web-emu",
+  "version": "1.0.0",
+  "description": "Retro DOS terminal and PCBoard BBS emulator web application",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smford/pcboard-web-emu.git"
+  },
+  "keywords": [
+    "pcboard",
+    "bbs",
+    "dos",
+    "terminal",
+    "retro",
+    "emulator",
+    "cp437",
+    "ansi"
+  ],
+  "author": "smford",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "vite": "^6.2.0",
+    "vitest": "^3.0.7"
+  }
+}

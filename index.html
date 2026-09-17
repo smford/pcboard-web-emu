@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PCBoard BBS & MS-DOS Terminal Emulator</title>
+  <meta name="description" content="Authentic retro MS-DOS terminal and Clark Development PCBoard BBS emulator with synthesized modem audio, CP437 ANSI art, and door games." />
+  <meta name="theme-color" content="#121417" />
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Hardware RS-232 & Modem Status HUD -->
+    <header class="hud-wrapper" id="hud-container" aria-label="Modem Telemetry and Hardware Indicators">
+      <!-- Injected by SysopHud.ts -->
+    </header>
+
+    <!-- Vintage CRT Monitor Bezel & Terminal Screen -->
+    <main class="monitor-housing" role="main">
+      <div class="crt-bezel" id="terminal-wrapper">
+        <div class="crt-glass">
+          <canvas id="terminal-canvas" width="720" height="400" aria-label="DOS and PCBoard BBS Terminal Screen"></canvas>
+        </div>
+      </div>
+
+      <!-- Monitor Brand Plate & Power Indicator -->
+      <footer class="monitor-brand">
+        <span class="brand-text">METROPOLIS MULTISYNC VGA - 80x25 IBM CP437</span>
+        <div class="power-indicator">
+          <span class="power-led"></span>
+          <span>POWER</span>
+        </div>
+      </footer>
+    </main>
+
+    <!-- System Control Toolbar -->
+    <nav class="toolbar-wrapper" aria-label="Terminal Controls">
+      <button id="btn-connect" class="retro-btn primary" title="Dial and connect to PCBoard BBS">📞 Connect BBS</button>
+      <button id="btn-hangup" class="retro-btn danger" title="Drop carrier / Hang up and return to DOS">📴 Hang Up</button>
+      <button id="btn-sound" class="retro-btn active" title="Toggle audio effects and synthesized modem sound">🔊 Audio: ON</button>
+      <button id="btn-clicks" class="retro-btn active" title="Toggle keyboard key click sounds">⌨ Clicks: ON</button>
+      <button id="btn-theme" class="retro-btn" title="Cycle monitor phosphor colors (VGA, Amber, Green)">📺 Monitor: VGA Color</button>
+      <button id="btn-scanlines" class="retro-btn active" title="Toggle CRT scanlines effect">⚡ Scanlines</button>
+      <button id="btn-curve" class="retro-btn" title="Toggle curved CRT monitor casing">🌐 CRT Curve</button>
+      <button id="btn-fullscreen" class="retro-btn" title="Toggle fullscreen mode">⛶ Fullscreen</button>
+      <button id="btn-help" class="retro-btn" title="View commands, SysOp credentials, and documentation">❓ Help / Docs</button>
+    </nav>
+
+    <!-- Mobile / Soft Keyboard Helper -->
+    <aside class="soft-keypad" aria-label="Virtual Soft Keys">
+      <button class="soft-key" data-key="ENTER">ENTER</button>
+      <button class="soft-key" data-key="ESC">ESC</button>
+      <button class="soft-key" data-key="BS">BACKSPACE</button>
+      <button class="soft-key" data-key=" ">SPACE</button>
+      <button class="soft-key" data-key="Y">Y</button>
+      <button class="soft-key" data-key="N">N</button>
+      <button class="soft-key" data-key="1">1</button>
+      <button class="soft-key" data-key="2">2</button>
+      <button class="soft-key" data-key="3">3</button>
+      <button class="soft-key" data-key="4">4</button>
+      <button class="soft-key" data-key="PCBOARD">PCBOARD</button>
+      <button class="soft-key" data-key="DIR">DIR</button>
+    </aside>
+  </div>
+
+  <!-- Help & Documentation Modal -->
+  <div id="help-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>PCBoard BBS & MS-DOS Terminal Emulator</h2>
+        <button id="modal-close" class="retro-btn danger" style="padding: 2px 8px;">✕</button>
+      </div>
+      <div class="modal-body">
+        <h3>Overview</h3>
+        <p>This web application is a high-fidelity emulator of an IBM PC compatible running MS-DOS 6.22 and dialing into a <strong>Clark Development Company PCBoard v15.22</strong> Multi-Node Bulletin Board System (BBS).</p>
+
+        <h3>Getting Started & Dialing</h3>
+        <ul>
+          <li>Click <code>📞 Connect BBS</code> in the toolbar to dial immediately with synthesized modem audio.</li>
+          <li>Or from the MS-DOS prompt <code>C:\></code>, type <code>PCBOARD</code> or <code>BBS</code>.</li>
+          <li>Or type <code>TELIX</code> to enter the modem terminal and type <code>ATDT 555-1994</code>.</li>
+        </ul>
+
+        <h3>PCBoard BBS Login Accounts</h3>
+        <ul>
+          <li><strong>SysOp Access:</strong> Log in as First Name: <code>Fred</code>, Last Name: <code>Clark</code> (or <code>SysOp SysOp</code>) to unlock Security Level 110!</li>
+          <li><strong>Returning Caller:</strong> First Name: <code>Guest</code>, Last Name: <code>Caller</code> (or <code>John Doe</code>).</li>
+          <li><strong>New User Registration:</strong> Enter any custom first and last name to experience the authentic new user intake questionnaire!</li>
+        </ul>
+
+        <h3>PCBoard Main Menu Features</h3>
+        <ul>
+          <li><code>[M]</code> / <code>[R]</code> - <strong>Message Base:</strong> Read threads and post new messages (saved locally).</li>
+          <li><code>[F]</code> / <code>[D]</code> - <strong>File Directories:</strong> Browse DOS shareware and simulate ZMODEM transfers.</li>
+          <li><code>[B]</code> - <strong>System Bulletins:</strong> View hardware specs, rules, and SRE uptime metrics.</li>
+          <li><code>[W]</code> - <strong>Who's Online:</strong> View multi-node caller activity.</li>
+          <li><code>[C]</code> / <code>[O]</code> - <strong>Chat with SysOp:</strong> Page the SysOp console with authentic PC speaker chimes!</li>
+          <li><code>[L]</code> - <strong>Legend of the Red Dragon (L.O.R.D.):</strong> Play the classic BBS tavern door game!</li>
+          <li><code>[T]</code> - <strong>TradeWars 2002:</strong> Space trading and sector navigation.</li>
+          <li><code>[G]</code> or <code>[DOS]</code> - <strong>Goodbye:</strong> Log off with session statistics and return to MS-DOS.</li>
+        </ul>
+
+        <h3>MS-DOS 6.22 Commands</h3>
+        <p>Supported commands at the <code>C:\></code> prompt: <code>DIR</code>, <code>CD</code>, <code>TYPE</code>, <code>MEM</code>, <code>VER</code>, <code>DATE</code>, <code>TIME</code>, <code>BEEP</code>, <code>CLS</code>, <code>HELP</code>, <code>TELIX</code>, <code>PCBOARD</code>.</p>
+
+        <h3>SRE Infrastructure & Reliability</h3>
+        <p>Built as a zero-dependency progressive web app designed for 100% offline availability on GitHub Pages. Sound effects (modem handshake, PC speaker, Model M key clicks) are synthesized via Web Audio API oscillators and noise generators.</p>
+      </div>
+      <div class="modal-footer">
+        <button onclick="document.getElementById('help-modal').classList.remove('visible')" class="retro-btn primary">Close Guide</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.ts"></script>
+</body>
+</html>

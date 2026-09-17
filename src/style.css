@@ -1,0 +1,483 @@
+/* ==========================================================================
+   PCBoard Web Emulator - DOS & BBS Terminal Styles
+   Senior SRE & Retro Systems Interface
+   ========================================================================== */
+
+:root {
+  --bg-desk: #121417;
+  --bezel-color: #2b2b2b;
+  --bezel-edge: #1a1a1a;
+  --bezel-highlight: #3f3f3f;
+  --crt-black: #06090c;
+  --vga-green: #55ff55;
+  --vga-amber: #ffaa00;
+  --led-off: #202422;
+  --led-green: #33ff33;
+  --led-red: #ff3333;
+  --led-amber: #ffaa00;
+  --led-glow-green: rgba(51, 255, 51, 0.7);
+  --led-glow-red: rgba(255, 51, 51, 0.7);
+  --led-glow-amber: rgba(255, 170, 0, 0.7);
+  --btn-bg: #2a2e33;
+  --btn-border: #444b54;
+  --btn-text: #c0c6ce;
+  --btn-hover: #373c44;
+  --font-mono: "Px437 IBM VGA 9x16", "Px437 IBM VGA 8x16", "Perfect DOS VGA 437", "Consolas", "Courier New", monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-desk);
+  color: #e0e0e0;
+  font-family: var(--font-mono);
+  font-size-adjust: from-font;
+  overflow-x: hidden;
+  user-select: none;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* --------------------------------------------------------------------------
+   Top Hardware Status HUD & LEDs
+   -------------------------------------------------------------------------- */
+.hud-wrapper {
+  width: 100%;
+  max-width: 960px;
+  background: #1e2227;
+  border: 2px solid #323842;
+  border-radius: 6px;
+  padding: 8px 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.hud-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.hud-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hardware-leds {
+  display: flex;
+  gap: 12px;
+}
+
+.led-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.led-group label {
+  font-size: 0.65rem;
+  color: #8c96a5;
+  font-weight: bold;
+}
+
+.led {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--led-off);
+  border: 1px solid #111;
+  transition: all 0.08s ease;
+}
+
+#led-dtr.active,
+#led-rts.active,
+#led-cts.active,
+#led-cd.active,
+#led-rx.active {
+  background-color: var(--led-green);
+  box-shadow: 0 0 8px var(--led-glow-green);
+}
+
+#led-ri.active {
+  background-color: var(--led-red);
+  box-shadow: 0 0 8px var(--led-glow-red);
+}
+
+#led-tx.active {
+  background-color: var(--led-amber);
+  box-shadow: 0 0 8px var(--led-glow-amber);
+}
+
+.system-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #b0bac5;
+}
+
+.info-label {
+  color: #727e8d;
+  font-weight: bold;
+}
+
+.info-value {
+  color: #55ff55;
+  font-weight: bold;
+  font-family: var(--font-mono);
+}
+
+.separator {
+  color: #3b424d;
+}
+
+.retro-select {
+  background: #13161a;
+  color: #ffaa00;
+  border: 1px solid #3f4754;
+  border-radius: 4px;
+  padding: 3px 6px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.retro-select:focus {
+  border-color: #55ff55;
+}
+
+/* --------------------------------------------------------------------------
+   CRT Monitor Housing & Bezel
+   -------------------------------------------------------------------------- */
+.monitor-housing {
+  width: 100%;
+  max-width: 960px;
+  background: linear-gradient(145deg, #333840 0%, #1f2328 100%);
+  border: 3px solid #474f5c;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), inset 0 2px 4px rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.crt-bezel {
+  position: relative;
+  width: 100%;
+  background: #000000;
+  border: 8px solid #14171a;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.9);
+}
+
+.crt-glass {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 720 / 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--crt-black);
+}
+
+/* Subtle glass reflection */
+.crt-glass::before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Vignette shadow */
+.crt-glass::after {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle, transparent 65%, rgba(0, 0, 0, 0.6) 100%);
+  pointer-events: none;
+  z-index: 11;
+}
+
+#terminal-canvas {
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  display: block;
+}
+
+/* Optional CRT curvature transform */
+.crt-curve {
+  transform: perspective(600px) rotateX(1.5deg) scale(0.99);
+  transition: transform 0.3s ease;
+}
+
+.monitor-brand {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 8px;
+  font-size: 0.75rem;
+  color: #6a7482;
+  letter-spacing: 1px;
+}
+
+.brand-text {
+  font-weight: bold;
+  color: #8c97a7;
+}
+
+.power-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.power-led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #33ff33;
+  box-shadow: 0 0 6px rgba(51, 255, 51, 0.8);
+}
+
+/* --------------------------------------------------------------------------
+   Control Toolbar
+   -------------------------------------------------------------------------- */
+.toolbar-wrapper {
+  width: 100%;
+  max-width: 960px;
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.retro-btn {
+  background: var(--btn-bg);
+  border: 1px solid var(--btn-border);
+  color: var(--btn-text);
+  padding: 7px 12px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.retro-btn:hover {
+  background: var(--btn-hover);
+  color: #ffffff;
+  border-color: #5d6774;
+}
+
+.retro-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.retro-btn.primary {
+  background: #1c4424;
+  border-color: #2e7a3d;
+  color: #a4f5b4;
+}
+
+.retro-btn.primary:hover {
+  background: #255c30;
+}
+
+.retro-btn.danger {
+  background: #4a1f1f;
+  border-color: #8c3636;
+  color: #fca5a5;
+}
+
+.retro-btn.danger:hover {
+  background: #612828;
+}
+
+.retro-btn.active {
+  background: #26384a;
+  border-color: #3b82f6;
+  color: #93c5fd;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Soft Keypad
+   -------------------------------------------------------------------------- */
+.soft-keypad {
+  width: 100%;
+  max-width: 960px;
+  margin-top: 12px;
+  background: #1a1e23;
+  border: 1px solid #2d343e;
+  border-radius: 6px;
+  padding: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+
+.soft-key {
+  background: #272d36;
+  border: 1px solid #3c4452;
+  color: #d1d5db;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.soft-key:hover {
+  background: #333a46;
+}
+
+.soft-key:active {
+  background: #1e232a;
+}
+
+/* --------------------------------------------------------------------------
+   Help / Documentation Modal
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(3px);
+  padding: 20px;
+}
+
+.modal-overlay.visible {
+  display: flex;
+}
+
+.modal-card {
+  background: #1c2026;
+  border: 2px solid #3b82f6;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 680px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
+  padding: 20px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #323a46;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+
+.modal-header h2 {
+  font-size: 1.15rem;
+  color: #60a5fa;
+}
+
+.modal-body {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #cbd5e1;
+}
+
+.modal-body h3 {
+  color: #facc15;
+  margin-top: 14px;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+
+.modal-body ul {
+  padding-left: 20px;
+  margin-bottom: 10px;
+}
+
+.modal-body code {
+  background: #0d1117;
+  color: #55ff55;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+}
+
+.modal-footer {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Layout
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  #app {
+    padding: 6px;
+  }
+  .monitor-housing {
+    padding: 8px;
+    border-radius: 8px;
+  }
+  .crt-bezel {
+    border-width: 4px;
+  }
+  .hud-bar {
+    justify-content: center;
+  }
+  .system-info {
+    font-size: 0.72rem;
+  }
+  .retro-btn {
+    padding: 6px 9px;
+    font-size: 0.72rem;
+  }
+  .soft-key {
+    padding: 5px 8px;
+    font-size: 0.72rem;
+  }
+}
